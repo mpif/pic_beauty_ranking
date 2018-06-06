@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
+import java.util.UUID;
 
 /**
  * @author: mpif
@@ -92,6 +93,10 @@ public class Md5Utils {
             ex.printStackTrace();
         }
         return md5Bytes;
+    }
+
+    public static String getUUID() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
 }
