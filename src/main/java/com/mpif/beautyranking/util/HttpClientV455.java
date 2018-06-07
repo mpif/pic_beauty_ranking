@@ -52,10 +52,6 @@ public class HttpClientV455 {
 
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(uri);
-//        HttpPost httpPost = new HttpPost("http://localhost:8080/admin/addDomain");
-//        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-//        nvps.add(new BasicNameValuePair("username", "vip"));
-//        nvps.add(new BasicNameValuePair("password", "secret"));
 
         int size = params.size();
         if(size > 0) {
@@ -69,7 +65,6 @@ public class HttpClientV455 {
                 nvps.add(new BasicNameValuePair(key, String.valueOf(value)));
             }
             httpPost.setEntity(new UrlEncodedFormEntity(nvps));
-//            httpPost.
         }
 
         CloseableHttpResponse response = httpclient.execute(httpPost);
