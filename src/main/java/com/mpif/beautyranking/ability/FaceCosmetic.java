@@ -1,6 +1,7 @@
 package com.mpif.beautyranking.ability;
 
 import com.mpif.beautyranking.AbstractComputeVision;
+import com.mpif.beautyranking.enums.FaceCosmeticEnum;
 import com.mpif.beautyranking.util.FileUtils;
 import com.mpif.beautyranking.util.HttpClientV455;
 import com.mpif.beautyranking.util.ResponseContent;
@@ -10,38 +11,40 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.util.Map;
 
 /**
- * @author: mpif
- * @date: 2018-06-07 15:39
+ * @Author: mpif
+ * @Date: 2018-06-07 23:23
  */
-public class IdCardOCR extends AbstractComputeVision {
 
-    protected String cardTypeKey = "card_type";
+public class FaceCosmetic extends AbstractComputeVision {
+
+    private String cosmeticKey = "cosmetic";
 
     /**
-     * card_type 是	int	整数	0/1	身份证图片类型，0-正面，1-反面
+     * 人脸美妆编码
      */
-    protected int cardType;
+    private int cosmetic;
 
-    public IdCardOCR() {
-        apiUrl = "https://api.ai.qq.com/fcgi-bin/ocr/ocr_idcardocr";
-        picPath = picRoot + "idcard.jpeg";
+    public FaceCosmetic() {
+        apiUrl = "https://api.ai.qq.com/fcgi-bin/ptu/ptu_facecosmetic";
+        picPath = picRoot + "img02.jpg";
 //        picPath = picRoot + "彭于晏.jpeg";
         image = FileUtils.fileToBase64Str(picPath);
-        cardType = 0;
+        cosmetic = FaceCosmeticEnum.ZTZ_XGHX.getCosmetic();
     }
 
     public static void main(String[] args) {
-
-        IdCardOCR idCardOCR = new IdCardOCR();
-        idCardOCR.ocr();
-
+        FaceCosmetic faceCosmetic = new FaceCosmetic();
+        faceCosmetic.cosmetic();
     }
 
-    public void ocr() {
+    public void cosmetic() {
         try {
             //计算签名是map中不包括sign, 共5个参数, 且map中的value都是进过URL编码的
             Map<String, Object> paramsMap = getParamsMapForSign();
-            paramsMap.put(cardTypeKey, urlEncode(cardType));
+            String encodeCosmetic = urlEncode(cosmetic);
+            System.out.println(cosmetic + ", encode:" + encodeCosmetic);
+            paramsMap.put(cosmeticKey, encodeCosmetic);
+
             String sortedDictStr = new StringsSortByDict().sortedDictStr(paramsMap);
             sortedDictStr = sortedDictStr + "&" + appKeyStr + "=" + appKey;
             System.out.println("sortedDictStr:");
@@ -54,7 +57,7 @@ public class IdCardOCR extends AbstractComputeVision {
             //提交的时候map中包括sign, 共6个参数, 且map中的value都是没有进过URL编码的
             //之前出错就是因为提交了进过URL编码的image, 估计是验证签名时又对image的内容进行URL编码, 所以算出来的sign不匹配。
             Map<String, Object> postParamsMap = getPostParamsMap();
-            paramsMap.put(cardTypeKey, cardType);
+            postParamsMap.put(cosmeticKey, cosmetic);
             postParamsMap.put(signKey, signatureStr);
             ResponseContent responseContent = HttpClientV455.doPost(apiUrl, postParamsMap);
             System.out.println("接口调用返回内容为:");

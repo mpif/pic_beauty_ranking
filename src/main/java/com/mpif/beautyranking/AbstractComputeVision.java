@@ -78,7 +78,6 @@ public class AbstractComputeVision {
         appKey = "HxbQwzb3CsnMbTjU";
         timestamp = DateUtils.getSecondTimestamp(new Date());
         nonceStr = Md5Utils.getUUID();
-        mode = 0;
         picRoot = System.getProperty("user.dir") + "/src/main/resources/imgs/";
     }
 

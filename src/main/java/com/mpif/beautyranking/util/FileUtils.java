@@ -1,6 +1,7 @@
 package com.mpif.beautyranking.util;
 
 import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BASE64EncoderStream;
+import org.apache.commons.codec.binary.StringUtils;
 
 import java.io.*;
 import java.util.Scanner;
@@ -43,6 +44,15 @@ public class FileUtils {
 
     public static String fileToBase64Str(String filePath) {
 
+        if(filePath == null || filePath.trim().length() == 0) {
+            throw new IllegalArgumentException("filePath can't be empty.");
+        }
+
+        File file = new File(filePath);
+        if(!file.exists()) {
+            throw new IllegalArgumentException("[" + filePath + "] not exists");
+        }
+
         StringBuilder sb = new StringBuilder();
 
         BufferedOutputStream bos = null;
@@ -53,7 +63,7 @@ public class FileUtils {
 
         try {
 
-            File file = new File(filePath);
+
             os = new ByteArrayOutputStream();
 
             bis = new BufferedInputStream(new FileInputStream(file));
