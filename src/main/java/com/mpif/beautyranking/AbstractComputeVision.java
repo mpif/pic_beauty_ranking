@@ -56,7 +56,7 @@ public class AbstractComputeVision {
     /**
      * 	是	string	原始图片的base64编码数据（原图大小上限1MB，支持JPG、PNG、BMP格式）	...	待识别图片
      */
-    protected String image;
+    protected static String image;
 
     protected String imageKey = "image";
 
@@ -70,15 +70,20 @@ public class AbstractComputeVision {
 
     protected static final String defaultCharset = "UTF-8";
 
-    protected String picRoot;
-    protected String picPath;
+    protected static String txtRoot;
+
+    protected static String picRoot;
+    protected static String picPath;
 
     public AbstractComputeVision() {
         appId = 1106879537;
         appKey = "HxbQwzb3CsnMbTjU";
-        timestamp = DateUtils.getSecondTimestamp(new Date());
+//        timestamp = DateUtils.getSecondTimestamp(new Date());
+        timestamp = Integer.parseInt(String.valueOf(System.currentTimeMillis()/1000));
         nonceStr = Md5Utils.getUUID();
+        txtRoot = System.getProperty("user.dir") + "/src/main/resources/";
         picRoot = System.getProperty("user.dir") + "/src/main/resources/imgs/";
+
     }
 
     public Map<String, Object> getParamsMapForSign() throws UnsupportedEncodingException {

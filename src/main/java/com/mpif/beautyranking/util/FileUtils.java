@@ -1,6 +1,8 @@
 package com.mpif.beautyranking.util;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BASE64DecoderStream;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BASE64EncoderStream;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
 
 import java.io.*;
@@ -91,6 +93,50 @@ public class FileUtils {
         System.out.println(base64Str);
 
         return base64Str;
+    }
+
+    public static void base64StrToFile(String base64Str, String filePath) throws IOException {
+
+        if(base64Str == null || base64Str.trim().length() == 0) {
+            throw new IllegalArgumentException("base64Str can't be empty.");
+        }
+
+        File file = new File(filePath);
+        if(!file.exists()) {
+            boolean create = file.createNewFile();
+            if(create) {
+                System.out.println("[" + filePath + "]文件创建成功!");
+            } else {
+                System.out.println("[" + filePath + "]文件创建失败!");
+            }
+        } else {
+            System.out.println("[" + filePath + "]文件已存在!");
+        }
+
+        BufferedOutputStream bos = null;
+        BufferedInputStream bis = null;
+
+        bis = new BufferedInputStream(new BASE64DecoderStream(new ByteArrayInputStream(base64Str.getBytes())));
+        byte[] data = new byte[4096];
+
+        try {
+
+            bos = new BufferedOutputStream(new FileOutputStream(file));
+            int len = 0;
+            while ((len = bis.read(data)) != -1) {
+                bos.write(data, 0, len);
+            }
+            bos.flush();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                IOUtils.close(bis, bos);
+            } catch (IOException ex3) {
+                ex3.printStackTrace();
+            }
+        }
+
     }
 
 }

@@ -52,6 +52,7 @@ public class HttpClientV455 {
 
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(uri);
+        httpPost.setHeader("Connection", "Keep-Alive");
 
         int size = params.size();
         if(size > 0) {

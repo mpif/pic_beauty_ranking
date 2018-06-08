@@ -15,7 +15,7 @@ public class PornDetect extends AbstractComputeVision {
 
     public PornDetect() {
         apiUrl = "https://api.ai.qq.com/fcgi-bin/vision/vision_porn";
-        picPath = picRoot + "img02.jpg";
+        picPath = picRoot + "porn.jpg";
 //        picPath = picRoot + "彭于晏.jpeg";
         image = FileUtils.fileToBase64Str(picPath);
     }
