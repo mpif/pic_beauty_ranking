@@ -56,8 +56,8 @@ public class FaceCosmetic extends AbstractComputeVision {
 
     public static void main(String[] args) {
         FaceCosmetic faceCosmetic = new FaceCosmetic();
-//        faceCosmetic.cosmetic();
-        faceCosmetic.executeAllCosmetic();
+        faceCosmetic.cosmetic();
+//        faceCosmetic.executeAllCosmetic();
 
 //        try {
 //            String appId = "1106879537";
@@ -104,6 +104,18 @@ public class FaceCosmetic extends AbstractComputeVision {
 
     public void cosmetic() {
         try {
+
+            imageFile = new File(picPath);
+            if(!imageFile.exists()) {
+                throw new IllegalArgumentException("[" + picPath + "]图片不存在.");
+            }
+            if(imageFile.length() > maxImageFileLength) {
+                throw new IllegalArgumentException("[" + picPath + "]图片大小超出最大限制500k.");
+            } else if(imageFile.length() == maxImageFileLength) {
+                System.out.println("[" + picPath + "]图片大小为500k,等于图片大小最大限制.");
+            }
+
+
             //计算签名是map中不包括sign, 共5个参数, 且map中的value都是进过URL编码的
             Map<String, Object> paramsMap = getParamsMapForSign();
             String encodeCosmetic = urlEncode(cosmetic);

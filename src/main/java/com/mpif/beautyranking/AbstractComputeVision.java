@@ -2,7 +2,9 @@ package com.mpif.beautyranking;
 
 import com.mpif.beautyranking.util.DateUtils;
 import com.mpif.beautyranking.util.Md5Utils;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
@@ -60,6 +62,10 @@ public class AbstractComputeVision {
 
     protected String imageKey = "image";
 
+    protected File imageFile;
+
+    protected long maxImageFileLength = 500 * FileUtils.ONE_KB;
+
     protected static final String defaultCharset = "UTF-8";
 
     protected static String txtRoot;
@@ -114,6 +120,19 @@ public class AbstractComputeVision {
         return URLEncoder.encode(String.valueOf(obj), defaultCharset);//.toUpperCase();
     }
 
+    public File getImageFile() {
+        return imageFile;
+    }
 
+    public void setImageFile(File imageFile) {
+        this.imageFile = imageFile;
+    }
 
+    public long getMaxImageFileLength() {
+        return maxImageFileLength;
+    }
+
+    public void setMaxImageFileLength(long maxImageFileLength) {
+        this.maxImageFileLength = maxImageFileLength;
+    }
 }
