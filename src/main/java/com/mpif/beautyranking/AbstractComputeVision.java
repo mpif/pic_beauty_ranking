@@ -56,17 +56,9 @@ public class AbstractComputeVision {
     /**
      * 	是	string	原始图片的base64编码数据（原图大小上限1MB，支持JPG、PNG、BMP格式）	...	待识别图片
      */
-    protected static String image;
+    protected String image;
 
     protected String imageKey = "image";
-
-
-    /**
-     * 	是	int	整数	0/1	检测模式，0-正常，1-大脸模式（默认1）
-     */
-    protected int mode;
-
-    protected String modeKey = "mode";
 
     protected static final String defaultCharset = "UTF-8";
 
@@ -92,9 +84,9 @@ public class AbstractComputeVision {
         String encodeNonce = urlEncode(nonceStr);
         String encodeImage = urlEncode(image);
 
-        System.out.println(appId + ", encode:" + encodeAppId);
-        System.out.println(timestamp + ", encode:" + encodeTimestamp);
-        System.out.println(nonceStr + ", encode:" + encodeNonce);
+        System.out.println("appId:" + appId + ", encode:" + encodeAppId);
+        System.out.println("timestamp:" + timestamp + ", encode:" + encodeTimestamp);
+        System.out.println("nonce: " + nonceStr + ", encode:" + encodeNonce);
         System.out.println("image:");
         System.out.println(image);
         System.out.println("encodeImage:");
