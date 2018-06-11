@@ -99,6 +99,33 @@ public class FileUtils {
         return base64Str;
     }
 
+    public static byte[] getFileBytes(String filePath) throws IOException {
+        File file = new File(filePath);
+        if(!file.exists()) {
+            throw new FileNotFoundException("[" + filePath + "] file not found.");
+        }
+        BufferedInputStream bis = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            bis = new BufferedInputStream(new FileInputStream(file));
+
+            byte[] bytes = new byte[1024];
+            baos = new ByteArrayOutputStream();
+            int n = 0;
+            while((n = bis.read(bytes)) != -1) {
+                baos.write(bytes, 0, n);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(bis != null) {
+                bis.close();
+                bis = null;
+            }
+        }
+        return baos.toByteArray();
+    }
+
     public static void base64StrToFile(String base64Str, String filePath) throws IOException {
 
         if(base64Str == null || base64Str.trim().length() == 0) {

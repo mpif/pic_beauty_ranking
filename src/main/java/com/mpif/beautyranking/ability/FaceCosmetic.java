@@ -242,7 +242,7 @@ public class FaceCosmetic extends AbstractComputeVision {
         if(StringUtils.isNotEmpty(imageBase64Str)) {
             System.out.println("image:");
             System.out.println(imageBase64Str);
-            String picOut = getOutFilePath(picPath);
+            String picOut = getOutFilePath(picPath, "cosmetic", this.getCosmetic());
             FileUtils.base64StrToFile(imageBase64Str, picOut);
         } else {
             System.out.println("image 字段为空!");
@@ -250,11 +250,7 @@ public class FaceCosmetic extends AbstractComputeVision {
 
     }
 
-    private String getOutFilePath(String picPath) {
-        String outPath = picPath.substring(0, picPath.lastIndexOf("."));
-        outPath = outPath + "_after-cosmetic-" + this.getCosmetic() + ".jpg";
-        return outPath;
-    }
+
 
     public int getCosmetic() {
         return cosmetic;

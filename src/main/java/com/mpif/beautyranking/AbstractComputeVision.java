@@ -2,9 +2,12 @@ package com.mpif.beautyranking;
 
 import com.mpif.beautyranking.util.DateUtils;
 import com.mpif.beautyranking.util.Md5Utils;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 
+
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
@@ -84,6 +87,11 @@ public class AbstractComputeVision {
 
     }
 
+    public String getFileBase64Str(String filePath) throws IOException {
+        return Base64.encodeBase64String(com.mpif.beautyranking.util.FileUtils.getFileBytes(picPath));
+    }
+
+
     public Map<String, Object> getParamsMapForSign() throws UnsupportedEncodingException {
         String encodeAppId = urlEncode(appId);
         String encodeTimestamp = urlEncode(timestamp);
@@ -118,6 +126,16 @@ public class AbstractComputeVision {
 
     public String urlEncode(Object obj) throws UnsupportedEncodingException {
         return URLEncoder.encode(String.valueOf(obj), defaultCharset);//.toUpperCase();
+    }
+
+    public String getOutFilePath(String picPath, String type, int index) {
+        String outPath = picPath.substring(0, picPath.lastIndexOf("."));
+        if(index == -1) {
+            outPath = outPath + "_after-" + type + ".jpg";
+        } else {
+            outPath = outPath + "_after-" + type + "-" + index + ".jpg";
+        }
+        return outPath;
     }
 
     public File getImageFile() {
