@@ -4,6 +4,7 @@ import com.mpif.beautyranking.AbstractComputeVision;
 import com.mpif.beautyranking.util.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -15,18 +16,41 @@ public class PornDetect extends AbstractComputeVision {
 
     public PornDetect() {
         apiUrl = "https://api.ai.qq.com/fcgi-bin/vision/vision_porn";
-        picPath = picRoot + "porn.jpg";
-//        picPath = picRoot + "彭于晏.jpeg";
-        image = FileUtils.fileToBase64Str(picPath);
     }
 
     public static void main(String[] args) {
         PornDetect pornDetect = new PornDetect();
-        pornDetect.detect();
+        pornDetect.detectImgs();
     }
 
-    public void detect() {
+    public void detectImgs() {
+
+        String[] imgPaths = new String[]{
+//            "img01.jpg",
+//            "img02.jpg",
+//            "img03.jpg",
+//            "img04.jpg",
+//            "img05.jpg",
+//            "pan-1008-1344.jpg"
+            "porn-01.jpg",
+            "porn-02.jpg",
+            "porn-03.jpg",
+            "porn-04.jpg",
+            "porn-05.jpg"
+        };
+
+        for(int i = 0; i < imgPaths.length; i ++) {
+            detect(picRoot + imgPaths[i]);
+        }
+
+    }
+
+
+    public void detect(String imgPath) {
         try {
+
+            image = getFileBase64Str(imgPath);
+
             //计算签名是map中不包括sign, 共5个参数, 且map中的value都是进过URL编码的
             Map<String, Object> paramsMap = getParamsMapForSign();
             String sortedDictStr = new StringsSortByDict().sortedDictStr(paramsMap);
@@ -44,13 +68,14 @@ public class PornDetect extends AbstractComputeVision {
             postParamsMap.put(signKey, signatureStr);
             ResponseContent responseContent = HttpClientV455.doPost(apiUrl, postParamsMap);
             System.out.println("接口调用返回内容为:");
-//            System.out.println(JsonUtils.format(responseContent.getResponseContentString()));
-            System.out.println(responseContent.getResponseContentString());
+            System.out.println(JsonUtils.format(responseContent.getResponseContentString()));
+//            System.out.println(responseContent.getResponseContentString());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
 
 }

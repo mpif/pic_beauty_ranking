@@ -88,7 +88,7 @@ public class AbstractComputeVision {
     }
 
     public String getFileBase64Str(String filePath) throws IOException {
-        return Base64.encodeBase64String(com.mpif.beautyranking.util.FileUtils.getFileBytes(picPath));
+        return Base64.encodeBase64String(com.mpif.beautyranking.util.FileUtils.getFileBytes(filePath));
     }
 
 
