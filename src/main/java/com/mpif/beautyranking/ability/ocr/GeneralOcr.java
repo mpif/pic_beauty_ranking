@@ -22,7 +22,7 @@ public class GeneralOcr extends AbstractComputeVision {
 
     public GeneralOcr() {
         apiUrl = "https://api.ai.qq.com/fcgi-bin/ocr/ocr_generalocr";
-        picPath = picRoot + "公积金申请表-resize.jpg";
+        picPath = picRoot + "duanzi.jpeg";
         try {
             image = getFileBase64Str(picPath);
         } catch (IOException e) {
@@ -92,10 +92,15 @@ public class GeneralOcr extends AbstractComputeVision {
             JSONArray dataArray = dataObj.getJSONArray("item_list");
 
             if (dataArray != null) {
+                int count = 0;
                 for (int i = 0; i < dataArray.size(); i++) {
+                    count++;
                     JSONObject itemObj = (JSONObject) dataArray.get(i);
-                    System.out.println(itemObj.get("item"));
-                    System.out.println(itemObj.get("itemstring"));
+//                    if(count % 10 != 0) {
+//                        System.out.print(itemObj.get("itemstring") + ",");
+//                    } else {
+                        System.out.println(itemObj.get("itemstring"));
+//                    }
                 }
             } else {
                 System.out.println("data array is empty.");
